@@ -15,6 +15,7 @@
     settype($hour, "integer");
     $month = $today_date->format('m');
     settype($month, "integer");
+    $month_str = $today_date->format('F'); // String del mes para la presentación del calendario.
     $day = $today_date->format('d');
 
     // La función cal_days_in_month devuelve la cantidad de días del mes usando el calendario especificado.
@@ -64,6 +65,9 @@
 </head>
 <body>
 <div>
+    <?php
+        echo "<h2>$month_str de $year</h2>"
+    ?>
         <table border="1">
             <thead>
                 <tr>
@@ -113,7 +117,7 @@
         </table>
     </div>
     <div class="ver_codigo">
-        <button type="button"><a href="">Ver código</a></button>
+        <button type="button"><a href="https://github.com/Feloje20/calendario_DWES/blob/main/calendario.php">Ver código</a></button>
     </div>   
 </body>
 </html>
