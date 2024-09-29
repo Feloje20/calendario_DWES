@@ -22,16 +22,17 @@
 
     // Array que guarda los días festivos
     $diasFestivos = [
-        "01-01", //año nuevo
-        "01-06", //Epifanía del señor
-        "05-01", //Día del trabajador
-        "08-15", //Asunción de la virgen
-        "09-20", //Día de prueba para ej
-        "10-12", //Día de la hispanidad
-        "11-01", //Día de todos los santos
-        "12-06", //Día de la constitución
-        "12-08", //Día de la inmaculada
-        "12-25" //Navidad
+        "1-1", //año nuevo
+        "1-6", //Epifanía del señor
+        "5-1", //Día del trabajador
+        "8-15", //Asunción de la virgen
+        "9-2", //Día de prueba para ej
+        "9-27", //Día de prueba para ej
+        "1-12", //Día de la hispanidad
+        "11-1", //Día de todos los santos
+        "12-6", //Día de la constitución
+        "12-8", //Día de la inmaculada
+        "12-25" // Navidad
     ];
 
     // Averiguamos el día de la semana usando la función date y strtotime
@@ -77,13 +78,17 @@
             </thead>
             <tbody>
                 <?php 
+                // Bucle que funcionará en función de cuantas lineas vaya a tener nuestro mes en el calendario.
                 for ($i = 0; $i <= intdiv($dia_semana_inicial_valor + $month_numdays, 7); $i++) {
                     echo "<tr>";
+                    // Bucle que recorre cada linea del calendario
                     for ($j = 0; $j <= 6; $j++) {
+                        // Relleno de X para los días que no pertenecen a nuestro mes
                         if ($contador_relleno > 0) {
                             echo "<td>X</td>";
                             $contador_relleno -= 1;
                         }
+                        // Si quedan días en nuestro mes, pondremos números y colores de ser necesario.
                         elseif ($contador_dias <= $month_numdays) {
                             if ($contador_dias == $day) {
                                 echo "<td><div style='background-color: green;'>$contador_dias</div></td>";
@@ -96,6 +101,7 @@
                             }
                             $contador_dias += 1;
                         }
+                        // Si no, rellenamos con más X porque son días del siguientes mes. 
                         else {
                             echo "<td>X</td>";
                         }
