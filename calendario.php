@@ -1,15 +1,15 @@
 <?php
     /**
     * Sumar los tres primeros números pares.
-    @autor = Jesús Ferrer López
-    @date 
+    * @autor = Jesús Ferrer López
+    * @date = 29/09/2024
     */
 
     // Adquirimos la fecha de nuestro dispositivo y la asignamos en una variable.
     $today_date = new DateTime();
 
     /* Obtenemos la hora y mes del año y los asignamos a variables junto a un cambio
-    de tipos a entero. */
+    de tipos a entero. Es posible asignar valores enteros a mano.*/
 
     $year = $today_date->format('Y');
     settype($hour, "integer");
@@ -98,6 +98,9 @@
                                 echo "<td><div style='background-color: green;'>$contador_dias</div></td>";
                             }
                             elseif (in_array("$month-$contador_dias", $diasFestivos)) {
+                                echo "<td><div style='background-color: red;'>$contador_dias</div></td>";
+                            }
+                            elseif ((($dia_semana_inicial_valor + $contador_dias)%7) == 0) {
                                 echo "<td><div style='background-color: red;'>$contador_dias</div></td>";
                             }
                             else {
