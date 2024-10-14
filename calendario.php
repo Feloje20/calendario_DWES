@@ -1,16 +1,18 @@
 <?php
     /**
-    * Sumar los tres primeros números pares.
+    * Proyecto de calendario v.Arrays.
     * @autor = Jesús Ferrer López
     * @date = 29/09/2024
+    * @ultima_modificación = 14/10/2024
     */
+
+    include("config/config.php");
 
     // Adquirimos la fecha de nuestro dispositivo y la asignamos en una variable.
     $today_date = new DateTime();
 
     /* Obtenemos la hora y mes del año y los asignamos a variables junto a un cambio
     de tipos a entero. Es posible asignar valores enteros a mano.*/
-
     $year = $today_date->format('Y');
     settype($hour, "integer");
     $month = $today_date->format('m');
@@ -21,20 +23,44 @@
     // La función cal_days_in_month devuelve la cantidad de días del mes usando el calendario especificado.
     $month_numdays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
-    // Array que guarda los días festivos
-    $diasFestivos = [
-        "1-1", //año nuevo
-        "1-6", //Epifanía del señor
-        "5-1", //Día del trabajador
-        "8-15", //Asunción de la virgen
-        "9-2", //Día de prueba para ej
-        "9-27", //Día de prueba para ej
-        "1-12", //Día de la hispanidad
-        "11-1", //Día de todos los santos
-        "12-6", //Día de la constitución
-        "12-8", //Día de la inmaculada
-        "12-25" // Navidad
-    ];
+    $es_festivo = false; // Bandera que usaré para dar prioridad a días festivos frente a los domingos.
+
+    $diasFestivos = array (
+        "nacionales" => [
+            "1-1" => "Año nuevo",
+            "1-6" => "Epifanía",
+            "3-29" => "Viernes santo",
+            "3-31" => "Domingo de resurección",
+            "5-1" => "Día del trabajo",
+            "6-9" => "Día de la región de Murcia",
+            "8-15" => "Asunción de la virgen",
+            "9-8" => "Día de Asturias",
+            "10-12" => "Fiesta nacional de España",
+            "11-1" => "Fiesta de todos los santos",
+            "12-6" => "Día de la constitución",
+            "12-8" => "La inmaculada concepción",
+            "12-25" => "Navidad"
+        ],
+        "locales" => [
+            "3-25" => "Feria de Córdoba",
+            "10-24" => "San Rafael"
+        ],
+        "comunidad" => [
+            "2-28" => "Día de Andalucía",
+            "3-1" => "Día de Illes Balears",
+            "3-19" => "San Jose",
+            "3-28" => "Jueves Santo",
+            "4-1" => "Lunes de Pascua",
+            "4-23" => "San Jorge",
+            "5-15" => "San Isidro",
+            "5-30" => "Día de Canarias",
+            "6-24" => "San Juan",
+            "7-25" => "Santiago Apostol",
+            "9-11" => "Fiesta nacional de cataluña",
+            "10-9" => "Día de la comunidad valenciana",
+            "11-9" => "Virgen de la almudena"
+        ]
+    );  
 
     // Averiguamos el día de la semana usando la función date y strtotime
     $fecha = "$year-$month-01";
@@ -50,7 +76,7 @@
     $contador_dias = 1;
     $contador_relleno = $dia_semana_inicial_valor;
 ?>
-
+<!-- VISTA -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,13 +87,34 @@
         .ver_codigo {
             margin-top: 50px;
         }
+
+        h1 {
+            text-align: center;
+        }
+
+        .domingo {
+            background-color: red;
+        }
+
+        .nacionales {
+            background-color: lightcoral;
+        }
+
+        .locales {
+            background-color: lightseagreen;
+        }
+
+        .comunidad {
+            background-color: lightgreen;
+        }
     </style>
 </head>
 <body>
-<div>
-    <?php
-        echo "<h2>$month_str de $year</h2>"
-    ?>
+    <h1>Calendario Jesús Ferrer López</h1>
+    <div>
+        <?php
+            echo "<h2>$month_str $year</h2>"
+        ?>
         <table border="1">
             <thead>
                 <tr>
@@ -97,14 +144,25 @@
                             if ($contador_dias == $day) {
                                 echo "<td><div style='background-color: green;'>$contador_dias</div></td>";
                             }
-                            elseif (in_array("$month-$contador_dias", $diasFestivos)) {
-                                echo "<td><div style='background-color: red;'>$contador_dias</div></td>";
-                            }
-                            elseif ((($dia_semana_inicial_valor + $contador_dias)%7) == 0) {
-                                echo "<td><div style='background-color: red;'>$contador_dias</div></td>";
-                            }
                             else {
-                                echo "<td>$contador_dias</td>";
+                                foreach ($diasFestivos as $tipo => $diaFestivo) {
+                                    if (array_key_exists("$month-$contador_dias", $diaFestivo)) {
+                                        echo "<td><div class='$tipo'>$contador_dias</div></td>";
+                                        $es_festivo = true;
+                                        break;
+                                    }
+                                }
+                                if (!$es_festivo) {
+                                    if ((($dia_semana_inicial_valor + $contador_dias)%7) == 0) {
+                                        echo "<td><div class='domingo'>$contador_dias</div></td>";
+                                    }
+                                    else {
+                                        echo "<td>$contador_dias</td>";
+                                    }
+                                }
+                                else {
+                                    $es_festivo = false;
+                                }
                             }
                             $contador_dias += 1;
                         }
