@@ -1,0 +1,53 @@
+.ver_codigo {
+    margin-top: 50px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.domingo {
+    background-color: red;
+}
+
+.nacionales {
+    background-color: lightcoral;
+}
+
+.locales {
+    background-color: lightpink;
+}
+
+.comunidad {
+    background-color: lightsalmon;
+}
+
+.today {
+    background-color: lightgreen;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+form input, form select {
+    margin: 10px 0;
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+}

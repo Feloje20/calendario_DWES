@@ -1,2 +1,2 @@
 Autor: Jesús Ferrer López
-Proyecot de calendario para DWES
+Proyecto de calendario para DWES
